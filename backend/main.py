@@ -2,6 +2,8 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 from flask import Flask, request
 from flask import jsonify
+from flask_cors import CORS
+
 
 
 def create_app():
@@ -10,7 +12,7 @@ def create_app():
 
 
 app = create_app()
-
+CORS(app)
 # Initialize Firestore DB
 cred = credentials.Certificate('key.json')
 firebase_admin.initialize_app(cred)
@@ -19,7 +21,8 @@ db = firestore.client()
 properties = db.collection('Inmuebles')
 
 
-@app.route('/api/v1/control/', methods=['POST'])
+@app.route('/api/v1/control/', methods=['POST']) 
+
 def create_user():
     body = request.json
     property_id = body.get('property_id')
