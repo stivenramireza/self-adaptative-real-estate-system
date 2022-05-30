@@ -1,48 +1,40 @@
-import firebase_admin
-from firebase_admin import credentials, firestore
-from flask import Flask, request
-from flask import jsonify
-from flask_cors import CORS
+from flask import request, jsonify
+from flask.wrappers import Response
 
-
-
-def create_app():
-    app = Flask(__name__)
-    return app
+from src.app import create_app
+from src.services.property_service import PropertyService
 
 
 app = create_app()
-CORS(app)
-# Initialize Firestore DB
-cred = credentials.Certificate('key.json')
-firebase_admin.initialize_app(cred)
-# default_app = initialize_app(cred)
-db = firestore.client()
-properties = db.collection('Inmuebles')
 
 
-@app.route('/api/v1/control/', methods=['POST']) 
+@app.route('/')
+def index() -> Response:
+    return (
+        jsonify(
+            {
+                'message': 'Self-adaptative real estate API is running successfully'
+            }
+        ),
+        200,
+    )
 
-def create_user():
-    body = request.json
-    property_id = body.get('property_id')
 
-    property = properties.document(property_id).get().to_dict()
-    visits = property.get('Visits')
+@app.route('/api/v1/control', methods=['POST'])
+def control_property_variables() -> Response:
+    property_id = request.json.get('property_id')
 
-    property.update({'Visits': visits + 1})
-
-    properties.document(property_id).update(property)
-
-    property = properties.document(property_id).get().to_dict()
-
-    if property.get('Visits') % 5 == 0:
-        price = property.get('Price')
-        property.update({'Price': price + 100_000})
-        properties.document(property_id).update(property)
+    property_service = PropertyService()
+    property = property_service.control_property_variables(property_id)
 
     return jsonify(property), 200
 
 
-if __name__ == '__main__':
-    app.run()
+@app.errorhandler(404)
+def not_found() -> Response:
+    return jsonify({'message': 'Resource not found'}), 404
+
+
+@app.errorhandler(500)
+def internal_server_error() -> Response:
+    return jsonify({'message': 'Internal server error'}), 500
