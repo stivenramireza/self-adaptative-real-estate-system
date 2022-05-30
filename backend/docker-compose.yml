@@ -1,8 +1,8 @@
 version: '3'
 
 services:
-  real-estate-system:
-    container_name: real_estate_system
-    image: stivenramireza:real-estate-api:latest
+  self-adaptative-real-estate-api:
+    container_name: self-adaptative-real-estate-api
+    image: stivenramireza/self-adaptative-real-estate-api:latest
     ports:
       - "5000:5000"
