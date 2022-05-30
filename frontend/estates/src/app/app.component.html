@@ -17,7 +17,7 @@
                   </div>
                   <div class="product-grid-item-bottom">
                       <span class="product-price">{{product.Price | currency: '$' : 'symbol' : '1.0-2' }}</span>
-                      <p-button> Comprar</p-button>
+                      <p-button (click) = "updateVisit(product.id)"> Ver</p-button>
                   </div>
               </div>
           </div>

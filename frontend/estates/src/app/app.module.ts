@@ -10,6 +10,8 @@ import { provideStorage,getStorage } from '@angular/fire/storage';
 import { AngularFireModule } from '@angular/fire/compat';
 import {DataViewModule} from 'primeng/dataview';
 import {ButtonModule} from 'primeng/button';
+import { HttpClientModule } from '@angular/common/http'
+
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import {ButtonModule} from 'primeng/button';
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage()),
-    DataViewModule
+    DataViewModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
