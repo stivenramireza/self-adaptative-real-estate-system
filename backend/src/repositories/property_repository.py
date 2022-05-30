@@ -9,10 +9,11 @@ class PropertyRepository:
 
     def find_property_by_id(self, property_id: str) -> Dict[str, any]:
         properties = self.database_repository.get_properties_collection()
-        return properties.document(property_id).get()
+        return properties.document(property_id).get().to_dict()
 
     def update_property_by_id(
         self, property_id: str, property: Dict[str, any]
-    ) -> None:
+    ) -> Dict[str, any]:
         properties = self.database_repository.get_properties_collection()
-        return properties.document(property_id).update(property)
+        properties.document(property_id).update(property)
+        return self.find_property_by_id(property_id)
