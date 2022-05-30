@@ -1,0 +1,25 @@
+<div class="card" style="height: 100%;">
+  <p-dataView #dv [value]="states" [paginator]="true" [rows] = "9" layout="grid">
+      <ng-template pTemplate="header">
+      </ng-template>
+      <ng-template let-product pTemplate="gridItem">
+          <div class="p-col-12 p-md-4" style = "width: 33%;height: 100%;">
+              <div class="product-grid-item card">
+                  <div class="product-grid-item-top">
+                      <div>
+                          <span class="product-category">{{product.category}}</span>
+                      </div>
+                  </div>
+                  <div class="product-grid-item-content">
+                      <img [src]="product.img" [alt]="product.Name"/>
+                      <div class="product-name">{{product.Name}}</div>
+                      <div class="product-description">{{product.Addres}}</div>
+                  </div>
+                  <div class="product-grid-item-bottom">
+                      <span class="product-price">{{product.Price | currency: '$' : 'symbol' : '1.0-2' }}</span>
+                      <p-button> Comprar</p-button>
+                  </div>
+              </div>
+          </div>
+      </ng-template>
+  </p-dataView>
