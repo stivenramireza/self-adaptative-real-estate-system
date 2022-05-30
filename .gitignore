@@ -1,5 +1,8 @@
-# Frontend
+# Code editors
+backend/.vscode
 
-# Backend
+# Virtual environments
 backend/venv
+
+# Python cache
 backend/__pycache__
